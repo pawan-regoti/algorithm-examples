@@ -1,0 +1,66 @@
+
+.vs
+.vscode
+**/.idea
+/packages
+
+# Backend
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Visual Studio Code
+# ===============================================================
+
+# User-specific files
+# ===============================================================
+**/**/*.dbmdl
+**/**/*.jfm
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.log
+*.pubxml
+backend/*api/*.txt
+
+**/node_modules
+**/[Bb]in/
+**/[Oo]bj/
+**/*.dbmdl
+**/*.jfm
+**/*DotSettings.user
+
+# Build results
+backend/**/[Dd]ebug/
+backend/**/[Dd]ebugPublic/
+backend/**/[Rr]elease/
+backend/**/[Rr]eleases/
+backend/**/x64/
+backend/**/x86/
+backend/**/build/
+backend/**/bld/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+*.vspscc
+*.vssscc
+UpgradeLog*.XML
+UpgradeLog*.htm
+
+*.ldf
+*.mdf
+/TestResults
+/artifacts/obj/Rock.Frontend/Debug/TypeScriptCompilerOutput.txt
+/Backup
+/frontend/test/coverage
+/frontend/wwwroot/dist
+/backend/Rock.backend.webapi/logs
+
+**/*.[Ll]ocal.json
+**/.npmrc
+**/*.log
