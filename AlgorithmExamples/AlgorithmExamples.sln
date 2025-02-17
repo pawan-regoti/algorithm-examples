@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgorithmExamples", "AlgorithmExamples\AlgorithmExamples.csproj", "{A7D8BAD5-74FB-4F09-9920-E5609D226AA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tree", "Tree\Tree.csproj", "{F8D6EA61-5752-4C1C-A6D7-4CA09C1E92C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphs", "Graphs\Graphs.csproj", "{F8D6EA61-5752-4C1C-A6D7-4CA09C1E92C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
