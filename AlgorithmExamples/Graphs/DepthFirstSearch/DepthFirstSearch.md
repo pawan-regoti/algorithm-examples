@@ -17,12 +17,13 @@ DFS-iterative (G, s):
              S.push( w )         
              mark w as visited
 
+OR
 
-    DFS-recursive(G, s):
-        mark s as visited
-        for all neighbours w of s in Graph G:
-            if w is not visited:
-                DFS-recursive(G, w)
+DFS-recursive(G, s):
+    mark s as visited
+    for all neighbours w of s in Graph G:
+        if w is not visited:
+            DFS-recursive(G, w)
 ```
 
 ### Resources
