@@ -22,22 +22,8 @@ try
 
     logger.LogInformation("Application started");
 
-    var root = new Node(logger, "A");
-    root.Neighbours.Add(new Node(logger, "B"));
-    root.Neighbours.Add(new Node(logger, "C"));
-    root.Neighbours[0].Neighbours.Add(new Node(logger, "D"));
-    root.Neighbours[0].Neighbours.Add(new Node(logger, "E"));
-    root.Neighbours[1].Neighbours.Add(new Node(logger, "F"));
-    root.Neighbours[1].Neighbours.Add(new Node(logger, "G"));
-    root.Neighbours[0].Neighbours[1].Neighbours.Add(new Node(logger, "H"));
-    root.Neighbours[0].Neighbours[1].Neighbours.Add(new Node(logger, "I"));
-    root.Neighbours[0].Neighbours[1].Neighbours.Add(new Node(logger, "J"));
-    root.Neighbours[1].Neighbours[0].Neighbours.Add(new Node(logger, "K"));
-    root.Neighbours[1].Neighbours[0].Neighbours.Add(new Node(logger, "L"));
-    root.Neighbours[1].Neighbours[0].Neighbours.Add(new Node(logger, "M"));
-    root.Neighbours[1].Neighbours[1].Neighbours.Add(new Node(logger, "N"));
-    root.Neighbours[1].Neighbours[1].Neighbours.Add(new Node(logger, "O"));
-    root.Neighbours[1].Neighbours[1].Neighbours.Add(new Node(logger, "P"));
+    var root = CreateGraph(logger);
+
     logger.LogInformation("Nodes created \n{Nodes}", root);
 
     logger.LogInformation("Run Breadth First Search");
@@ -68,6 +54,47 @@ finally
 {
     Log.Information("Application closing");
     Log.CloseAndFlush();
+}
+
+Node CreateGraph(ILogger<Program> logger)
+{
+    logger.LogInformation("Creating nodes");
+    logger.LogInformation(@"
+        A
+        ├── B
+        │   ├── D
+        │   ├── E
+        │   └── H
+        ├── C
+        │   ├── F
+        │   └── G
+        │       ├── K
+        │       ├── L
+        │       ├── M
+        │       └── N
+        │           ├── O
+        │           └── P
+        └── I
+            └── J");
+    
+    var root = new Node(logger, "A");
+    root.Neighbours.Add(new Node(logger, "B"));
+    root.Neighbours.Add(new Node(logger, "C"));
+    root.Neighbours[0].Neighbours.Add(new Node(logger, "D"));
+    root.Neighbours[0].Neighbours.Add(new Node(logger, "E"));
+    root.Neighbours[1].Neighbours.Add(new Node(logger, "F"));
+    root.Neighbours[1].Neighbours.Add(new Node(logger, "G"));
+    root.Neighbours[0].Neighbours[1].Neighbours.Add(new Node(logger, "H"));
+    root.Neighbours[0].Neighbours[1].Neighbours.Add(new Node(logger, "I"));
+    root.Neighbours[0].Neighbours[1].Neighbours.Add(new Node(logger, "J"));
+    root.Neighbours[1].Neighbours[0].Neighbours.Add(new Node(logger, "K"));
+    root.Neighbours[1].Neighbours[0].Neighbours.Add(new Node(logger, "L"));
+    root.Neighbours[1].Neighbours[0].Neighbours.Add(new Node(logger, "M"));
+    root.Neighbours[1].Neighbours[1].Neighbours.Add(new Node(logger, "N"));
+    root.Neighbours[1].Neighbours[1].Neighbours.Add(new Node(logger, "O"));
+    root.Neighbours[1].Neighbours[1].Neighbours.Add(new Node(logger, "P"));
+       
+    return root;
 }
 
 void MarkNodesAsNotVisited(Node root)
