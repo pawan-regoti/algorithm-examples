@@ -46,9 +46,15 @@ try
 
     MarkNodesAsNotVisited(root);
     
-    logger.LogInformation("Run Depth First Search");
-    RunDepthFirstSearch(root, host.Services);
-    logger.LogInformation("Depth First Search finished");
+    logger.LogInformation("Run Depth First Search - Recursive");
+    RunDepthFirstSearch(root, host.Services, runInRecursiveMode: true);
+    logger.LogInformation("Depth First Search - Recursive finished");
+    
+    MarkNodesAsNotVisited(root);
+    
+    logger.LogInformation("Run Depth First Search - Iterative");
+    RunDepthFirstSearch(root, host.Services, runInRecursiveMode: false);
+    logger.LogInformation("Depth First Search - Iterative finished");
 
     MarkNodesAsNotVisited(root);
 
@@ -79,8 +85,8 @@ void RunBreadthFirstSearch(Node root, IServiceProvider serviceProvider)
     breadthFirstSearch.Run(root);
 }
 
-void RunDepthFirstSearch(Node root, IServiceProvider serviceProvider)
+void RunDepthFirstSearch(Node root, IServiceProvider serviceProvider, bool runInRecursiveMode)
 {
     var depthFirstSearch = serviceProvider.GetRequiredService<DepthFirstSearch>();
-    depthFirstSearch.Run(root);
+    depthFirstSearch.Run(root, runInRecursiveMode);
 }
