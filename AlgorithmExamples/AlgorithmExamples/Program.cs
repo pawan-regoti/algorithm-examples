@@ -50,6 +50,8 @@ try
     RunDepthFirstSearch(root, host.Services);
     logger.LogInformation("Depth First Search finished");
 
+    MarkNodesAsNotVisited(root);
+
     logger.LogInformation("Application finished");
 }
 catch (Exception e)

@@ -1,8 +1,6 @@
-using Microsoft.Extensions.Logging;
-
 namespace Graphs.DepthFirstSearch;
 
-public class DepthFirstSearch(ILogger<DepthFirstSearch> logger)
+public class DepthFirstSearch()
 {
     public void Run(Node root)
     {
