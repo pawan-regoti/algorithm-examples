@@ -2,22 +2,25 @@ using Serilog;
 
 using Graphs;
 using Graphs.BreadthFirstSearch;
+using Graphs.DepthFirstSearch;
 
 var builder = Host.CreateApplicationBuilder(args);
-builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(new LoggerConfiguration()
+Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger(), dispose: true);
+    .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(Log.Logger, dispose: true);
 
 try
 {
     builder.Services.AddTransient<BreadthFirstSearch>();
+    builder.Services.AddTransient<DepthFirstSearch>();
 
     var host = builder.Build();
     var logger = host.Services.GetRequiredService<ILogger<Program>>();
 
     logger.LogInformation("Application started");
-    var breadthFirstSearch = host.Services.GetRequiredService<BreadthFirstSearch>();
 
     var root = new Node(logger, "A");
     root.Neighbours.Add(new Node(logger, "B"));
@@ -37,10 +40,45 @@ try
     root.Neighbours[1].Neighbours[1].Neighbours.Add(new Node(logger, "P"));
     logger.LogInformation("Nodes created \n{Nodes}", root);
 
-    breadthFirstSearch.Run(root);
+    logger.LogInformation("Run Breadth First Search");
+    RunBreadthFirstSearch(root, host.Services);
+    logger.LogInformation("Breadth First Search finished");
+
+    MarkNodesAsNotVisited(root);
+    
+    logger.LogInformation("Run Depth First Search");
+    RunDepthFirstSearch(root, host.Services);
+    logger.LogInformation("Depth First Search finished");
+
     logger.LogInformation("Application finished");
 }
 catch (Exception e)
 {
     Log.Error(e, "Application failed: {Message}", e.Message);
+}
+finally
+{
+    Log.Information("Application closing");
+    Log.CloseAndFlush();
+}
+
+void MarkNodesAsNotVisited(Node root)
+{
+    root.MarkUnvisited();
+    foreach (var neighbour in root.Neighbours)
+    {
+        MarkNodesAsNotVisited(neighbour);
+    }
+}
+
+void RunBreadthFirstSearch(Node root, IServiceProvider serviceProvider)
+{
+    var breadthFirstSearch = serviceProvider.GetRequiredService<BreadthFirstSearch>();
+    breadthFirstSearch.Run(root);
+}
+
+void RunDepthFirstSearch(Node root, IServiceProvider serviceProvider)
+{
+    var depthFirstSearch = serviceProvider.GetRequiredService<DepthFirstSearch>();
+    depthFirstSearch.Run(root);
 }

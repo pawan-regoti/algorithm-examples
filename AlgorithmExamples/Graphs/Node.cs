@@ -13,6 +13,11 @@ public class Node(ILogger logger,  string name)
         Visited = true;
         logger.LogInformation("Node visited: {Name}", Name);
     }
+    
+    public void MarkUnvisited()
+    {
+        Visited = false;
+    }
 
     public override string ToString()
     {
