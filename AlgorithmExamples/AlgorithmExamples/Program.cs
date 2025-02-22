@@ -63,19 +63,21 @@ Node CreateGraph(ILogger<Program> logger)
         A
         ├── B
         │   ├── D
-        │   ├── E
-        │   └── H
-        ├── C
-        │   ├── F
-        │   └── G
-        │       ├── K
-        │       ├── L
-        │       ├── M
-        │       └── N
-        │           ├── O
-        │           └── P
-        └── I
-            └── J");
+        │   └── E
+        │       ├── H
+        │       ├── I
+        │       └── J
+        └── C
+            ├── F
+            │   ├── K
+            │   ├── L
+            │   └── M
+            │
+            └── G
+                ├── N
+                ├── O
+                └── P
+    ");
     
     var root = new Node(logger, "A");
     root.Neighbours.Add(new Node(logger, "B"));
