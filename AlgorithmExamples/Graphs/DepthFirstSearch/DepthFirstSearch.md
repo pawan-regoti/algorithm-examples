@@ -28,4 +28,5 @@ DFS-recursive(G, s):
 
 ### Resources
 - https://www.cs.usfca.edu/~galles/visualization/DFS.html
+- https://github.com/trekhleb/javascript-algorithms/tree/master/src/algorithms/graph/depth-first-search
 - https://www.hackerearth.com/practice/algorithms/graphs/depth-first-search/tutorial/

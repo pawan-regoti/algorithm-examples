@@ -23,5 +23,6 @@ BFS (G, s)
 
 ### Resources
 - https://www.cs.usfca.edu/~galles/visualization/BFS.html
+- https://github.com/trekhleb/javascript-algorithms/tree/master/src/algorithms/graph/breadth-first-search
 - https://www.hackerearth.com/practice/algorithms/graphs/breadth-first-search/tutorial/
 
