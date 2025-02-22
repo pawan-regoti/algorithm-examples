@@ -2,9 +2,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Graphs;
 
-public class Node(ILogger logger,  string name)
+public class Node(ILogger<Node> logger)
 {
-    public string Name { get; set; } = name;
+    public string Name { get; set; } = string.Empty;
     public List<Node> Neighbours { get; set; } = new();
     public bool Visited { get; private set; }
 
