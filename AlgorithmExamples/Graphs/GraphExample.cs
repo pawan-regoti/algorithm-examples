@@ -60,6 +60,29 @@ public class GraphExample(
                     ├── O
                     └── P
         ");
+        
+        var graph = new Graph<string>(16);
+        graph.AddEdge("A", "B");
+        graph.AddEdge("A", "C");
+        graph.AddEdge("B", "D");
+        graph.AddEdge("B", "E");
+        graph.AddEdge("E", "H");
+        graph.AddEdge("E", "I");
+        graph.AddEdge("E", "J");
+        graph.AddEdge("C", "F");
+        graph.AddEdge("C", "G");
+        graph.AddEdge("F", "K");
+        graph.AddEdge("F", "L");
+        graph.AddEdge("F", "M");
+        graph.AddEdge("G", "N");
+        graph.AddEdge("G", "O");
+        graph.AddEdge("G", "P");
+        logger.LogInformation("Graph created");
+        logger.LogInformation("Is directed: {IsDirected}", graph.IsDirected());
+        logger.LogInformation("Number of edges: {NumberOfEdges}", graph.NumberOfEdges());
+        logger.LogInformation("Number of nodes: {NumberOfNodes}", graph.NumberOfNodes());
+        logger.LogInformation("Neighbours of A: {Neighbours}", string.Join(", ", graph.GetNeighbours("A")));
+        logger.LogInformation("Display graph: \n{Graph}", graph);
 
         var root = CreateNode("A");
         root.Neighbours.Add(CreateNode("B"));
