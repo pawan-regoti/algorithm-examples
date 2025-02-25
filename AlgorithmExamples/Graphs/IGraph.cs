@@ -1,6 +1,6 @@
 namespace Graphs;
 
-public interface IGraph<T>
+public interface IGraph<T> where T : Node
 {
     bool IsDirected();
     

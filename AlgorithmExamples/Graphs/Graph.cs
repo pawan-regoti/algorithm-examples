@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Graphs;
 
-public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T>
+public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T> where T : Node
 {
     private readonly int[,] _graphMatrix = new int[numberOfNodes, numberOfNodes];
     
@@ -82,7 +82,7 @@ public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T>
             var neighbours = GetNeighbours(node).ToList();
             if (visitedNodes.Add(node))
             {
-                nodeString.AppendLine($"{node}");
+                nodeString.AppendLine($"{node.Name}");
             }
             
             if(neighbours.All(x=> visitedNodes.Contains(x)))
@@ -94,7 +94,7 @@ public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T>
             {
                 if (visitedNodes.Add(neighbour))
                 {
-                    nodeString.AppendLine($"{new string(' ', currentDepth * 4)}└── {neighbour}");
+                    nodeString.AppendLine($"{new string(' ', currentDepth * 4)}└── {neighbour.Name}");
                     nodeString = CreateNeighbourString(neighbour, currentDepth + 1, nodeString);
                 }
             }

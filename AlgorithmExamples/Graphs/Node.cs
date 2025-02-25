@@ -19,7 +19,7 @@ public class Node(ILogger<Node> logger)
         Visited = false;
     }
 
-    public override string ToString()
+    public string GetNodeHierarchy()
     {
         if(Neighbours.Count == 0)
         {
@@ -27,7 +27,7 @@ public class Node(ILogger<Node> logger)
         }
         else
         {
-            return $"{Name} > ({string.Join(", ", Neighbours)})";
+            return $"{Name} > ({string.Join(", ", Neighbours.Select(x => x.GetNodeHierarchy()))})";
         }
     }
 }
