@@ -49,6 +49,11 @@ public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T> wh
             _graphMatrix[toNodeIndex, fromNodeIndex] = weight;
         }
     }
+    
+    public T GetNode(int index = 0)
+    {
+        return _nodes[index];
+    }
 
     public IEnumerable<T> GetNeighbours(T node)
     {

@@ -2,41 +2,41 @@ namespace Graphs.DepthFirstSearch;
 
 public class DepthFirstSearch()
 {
-    public void Run(Node root, bool runInRecursiveMode = true)
+    public void Run(Node startingNode, Graph<Node> graph, bool runInRecursiveMode = true)
     {
         if (runInRecursiveMode)
         {
-            RunRecursive(root);
+            RunRecursive(startingNode, graph);
         }
         else
         {
-            RunIterative(root);
+            RunIterative(startingNode, graph);
         }
     }
     
-    private void RunRecursive(Node root)
+    private void RunRecursive(Node node, Graph<Node> graph)
     {
-        root.Visit();
-        foreach (var neighbour in root.Neighbours)
+        node.Visit();
+        foreach (var neighbour in graph.GetNeighbours(node))
         {
             if (!neighbour.Visited)
             {
-                RunRecursive(neighbour);
+                RunRecursive(neighbour, graph);
             }
         }
     }
     
-    private void RunIterative(Node root)
+    private void RunIterative(Node startingNode, Graph<Node> graph)
     {
         var stack = new Stack<Node>();
-        stack.Push(root);
+        stack.Push(startingNode);
         
         while (stack.Count > 0)
         {
             var node = stack.Pop();
             node.Visit();
             
-            foreach (var neighbour in node.Neighbours)
+            foreach (var neighbour in graph.GetNeighbours(node))
             {
                 if (!neighbour.Visited)
                 {

@@ -10,35 +10,34 @@ public class GraphExample(
     BreadthFirstSearch.BreadthFirstSearch breadthFirstSearch, 
     DepthFirstSearch.DepthFirstSearch depthFirstSearch)
 {
+    private readonly List<Node> _nodes = new(); 
     public void Run()
     {
         
-        var root = CreateGraph(serviceProvider);
-
-        logger.LogInformation("Nodes created \n{NodeHierarchy}", root.GetNodeHierarchy());
-
+        var graph = CreateGraph();
+        
         logger.LogInformation("Run Breadth First Search");
-        RunBreadthFirstSearch(root);
+        RunBreadthFirstSearch(graph);
         logger.LogInformation("Breadth First Search finished");
 
-        MarkNodesAsNotVisited(root);
+        MarkNodesAsNotVisited();
     
         logger.LogInformation("Run Depth First Search - Recursive");
-        RunDepthFirstSearch(root, runInRecursiveMode: true);
+        RunDepthFirstSearch(graph, runInRecursiveMode: true);
         logger.LogInformation("Depth First Search - Recursive finished");
     
-        MarkNodesAsNotVisited(root);
+        MarkNodesAsNotVisited();
     
         logger.LogInformation("Run Depth First Search - Iterative");
-        RunDepthFirstSearch(root, runInRecursiveMode: false);
+        RunDepthFirstSearch(graph, runInRecursiveMode: false);
         logger.LogInformation("Depth First Search - Iterative finished");
 
-        MarkNodesAsNotVisited(root);
+        MarkNodesAsNotVisited();
 
     }
     
     
-    Node CreateGraph(IServiceProvider serviceProvider)
+    Graph<Node> CreateGraph()
     {
         logger.LogInformation("Creating nodes");
         logger.LogInformation(@"
@@ -102,50 +101,30 @@ public class GraphExample(
         logger.LogInformation("Neighbours of A: {Neighbours}", string.Join(", ", graph.GetNeighbours(a).Select(x => x.Name)));
         logger.LogInformation("Display graph: \n{Graph}", graph);
 
-        var root = CreateNode("A");
-        root.Neighbours.Add(CreateNode("B"));
-        root.Neighbours.Add(CreateNode("C"));
-        root.Neighbours[0].Neighbours.Add(CreateNode("D"));
-        root.Neighbours[0].Neighbours.Add(CreateNode("E"));
-        root.Neighbours[1].Neighbours.Add(CreateNode("F"));
-        root.Neighbours[1].Neighbours.Add(CreateNode("G"));
-        root.Neighbours[0].Neighbours[1].Neighbours.Add(CreateNode("H"));
-        root.Neighbours[0].Neighbours[1].Neighbours.Add(CreateNode("I"));
-        root.Neighbours[0].Neighbours[1].Neighbours.Add(CreateNode("J"));
-        root.Neighbours[1].Neighbours[0].Neighbours.Add(CreateNode("K"));
-        root.Neighbours[1].Neighbours[0].Neighbours.Add(CreateNode("L"));
-        root.Neighbours[1].Neighbours[0].Neighbours.Add(CreateNode("M"));
-        root.Neighbours[1].Neighbours[1].Neighbours.Add(CreateNode("N"));
-        root.Neighbours[1].Neighbours[1].Neighbours.Add(CreateNode("O"));
-        root.Neighbours[1].Neighbours[1].Neighbours.Add(CreateNode("P"));
-           
-        return root;
+        return graph;
     }
     
     private Node CreateNode(string name)
     {
         var node = serviceProvider.GetRequiredService<Node>();
         node.Name = name;
+        _nodes.Add(node);
         return node;
     }
 
-    void MarkNodesAsNotVisited(Node root)
+    void MarkNodesAsNotVisited()
     {
-        root.MarkUnvisited();
-        foreach (var neighbour in root.Neighbours)
-        {
-            MarkNodesAsNotVisited(neighbour);
-        }
+        _nodes.ForEach(x => x.MarkUnvisited());
     }
 
-    void RunBreadthFirstSearch(Node root)
+    void RunBreadthFirstSearch(Graph<Node> graph)
     {
-        breadthFirstSearch.Run(root);
+        breadthFirstSearch.Run(graph.GetNode(0), graph);
     }
 
-    void RunDepthFirstSearch(Node root, bool runInRecursiveMode)
+    void RunDepthFirstSearch(Graph<Node> graph, bool runInRecursiveMode)
     {
-        depthFirstSearch.Run(root, runInRecursiveMode);
+        depthFirstSearch.Run(graph.GetNode(0), graph, runInRecursiveMode);
     }
 
 }

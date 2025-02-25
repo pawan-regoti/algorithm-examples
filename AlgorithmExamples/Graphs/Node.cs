@@ -5,7 +5,6 @@ namespace Graphs;
 public class Node(ILogger<Node> logger)
 {
     public string Name { get; set; } = string.Empty;
-    public List<Node> Neighbours { get; set; } = new();
     public bool Visited { get; private set; }
 
     public void Visit()
@@ -17,17 +16,5 @@ public class Node(ILogger<Node> logger)
     public void MarkUnvisited()
     {
         Visited = false;
-    }
-
-    public string GetNodeHierarchy()
-    {
-        if(Neighbours.Count == 0)
-        {
-            return Name;
-        }
-        else
-        {
-            return $"{Name} > ({string.Join(", ", Neighbours.Select(x => x.GetNodeHierarchy()))})";
-        }
     }
 }

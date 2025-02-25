@@ -4,19 +4,19 @@ namespace Graphs.BreadthFirstSearch;
 
 public class BreadthFirstSearch(ILogger<BreadthFirstSearch> logger)
 {
-    public void Run(Node root)
+    public void Run(Node startingNode, Graph<Node> graph)
     {
         logger.LogInformation("Running Breadth First Search");
         var queue = new Queue<Node>();
-        queue.Enqueue(root);
+        queue.Enqueue(startingNode);
 
-        root.Visit();
+        startingNode.Visit();
 
         while (queue.Count > 0)
         {
             var node = queue.Dequeue();
 
-            foreach (var neighbour in node.Neighbours)
+            foreach (var neighbour in graph.GetNeighbours(node))
             {
                 if (!neighbour.Visited)
                 {
