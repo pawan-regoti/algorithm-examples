@@ -73,12 +73,36 @@ public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T>
     
     public override string ToString()
     {
+        var depth = 0;
+        var visitedNodes = new HashSet<T>();
         var graphString = new StringBuilder();
-        foreach (var node in _nodes)
+        
+        StringBuilder CreateNeighbourString(T node, int currentDepth, StringBuilder nodeString)
         {
-            var neighbours = GetNeighbours(node);
-            graphString.AppendLine($"{node}: {string.Join(", ", neighbours)}");
+            var neighbours = GetNeighbours(node).ToList();
+            if (visitedNodes.Add(node))
+            {
+                nodeString.AppendLine($"{node}");
+            }
+            
+            if(neighbours.All(x=> visitedNodes.Contains(x)))
+            {
+                return nodeString;
+            }
+            
+            foreach (var neighbour in neighbours)
+            {
+                if (visitedNodes.Add(neighbour))
+                {
+                    nodeString.AppendLine($"{new string(' ', currentDepth * 4)}└── {neighbour}");
+                    nodeString = CreateNeighbourString(neighbour, currentDepth + 1, nodeString);
+                }
+            }
+            return nodeString;
         }
+        
+        graphString = CreateNeighbourString(_nodes[0], depth, graphString);
+        
         return graphString.ToString();
     }
 }
