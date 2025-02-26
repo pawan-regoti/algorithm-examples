@@ -8,7 +8,8 @@ public class GraphExample(
     ILogger<GraphExample> logger, 
     IServiceProvider serviceProvider,
     BreadthFirstSearch.BreadthFirstSearch breadthFirstSearch, 
-    DepthFirstSearch.DepthFirstSearch depthFirstSearch)
+    DepthFirstSearch.DepthFirstSearch depthFirstSearch,
+    Prims.PrimsMinimumSpanningTree primsMinimumSpanningTree)
 {
     private readonly List<Node> _nodes = new(); 
     public void Run()
@@ -33,33 +34,18 @@ public class GraphExample(
         logger.LogInformation("Depth First Search - Iterative finished");
 
         MarkNodesAsNotVisited();
-
+        
+        logger.LogInformation("Run Prims Minimum Spanning Tree");
+        primsMinimumSpanningTree.Run(graph);
+        logger.LogInformation("Prims Minimum Spanning Tree finished");
+        
+        MarkNodesAsNotVisited();
     }
     
     
     Graph<Node> CreateGraph()
     {
         logger.LogInformation("Creating nodes");
-        logger.LogInformation(@"
-            A
-            ├── B
-            │   ├── D
-            │   └── E
-            │       ├── H
-            │       ├── I
-            │       └── J
-            └── C
-                ├── F
-                │   ├── K
-                │   ├── L
-                │   └── M
-                │
-                └── G
-                    ├── N
-                    ├── O
-                    └── P
-        ");
-        
         var a = CreateNode("A");
         var b = CreateNode("B");
         var c = CreateNode("C");
@@ -76,25 +62,28 @@ public class GraphExample(
         var n = CreateNode("N");
         var o = CreateNode("O");
         var p = CreateNode("P");
+        logger.LogInformation("Nodes created");
         
+        logger.LogInformation("Creating graph");
         var graph = new Graph<Node>(16);
-        graph.AddEdge(a, b);
-        graph.AddEdge(a, c);
-        graph.AddEdge(b, d);
-        graph.AddEdge(b, e);
-        graph.AddEdge(e, h);
-        graph.AddEdge(e, i);
-        graph.AddEdge(e, j);
-        graph.AddEdge(c, f);
-        graph.AddEdge(c, g);
-        graph.AddEdge(f, k);
-        graph.AddEdge(f, l);
-        graph.AddEdge(f, m);
-        graph.AddEdge(g, n);
-        graph.AddEdge(g, o);
-        graph.AddEdge(g, p);
+        graph.AddEdge(new Edge<Node>(a, b));
+        graph.AddEdge(new Edge<Node>(a, c));
+        graph.AddEdge(new Edge<Node>(b, d));
+        graph.AddEdge(new Edge<Node>(b, e));
+        graph.AddEdge(new Edge<Node>(e, h));
+        graph.AddEdge(new Edge<Node>(e, i));
+        graph.AddEdge(new Edge<Node>(e, j));
+        graph.AddEdge(new Edge<Node>(c, f));
+        graph.AddEdge(new Edge<Node>(c, g));
+        graph.AddEdge(new Edge<Node>(f, k));
+        graph.AddEdge(new Edge<Node>(f, l));
+        graph.AddEdge(new Edge<Node>(f, m));
+        graph.AddEdge(new Edge<Node>(g, n));
+        graph.AddEdge(new Edge<Node>(g, o));
+        graph.AddEdge(new Edge<Node>(g, p));
         
         logger.LogInformation("Graph created");
+        
         logger.LogInformation("Is directed: {IsDirected}", graph.IsDirected());
         logger.LogInformation("Number of edges: {NumberOfEdges}", graph.NumberOfEdges());
         logger.LogInformation("Number of nodes: {NumberOfNodes}", graph.NumberOfNodes());

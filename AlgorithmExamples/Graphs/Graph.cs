@@ -9,6 +9,8 @@ public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T> wh
     
     private readonly T[] _nodes = new T[numberOfNodes];
 
+    public T[] GetNodes() => _nodes;
+
     public bool IsDirected() => isDirected;
 
     public int NumberOfNodes() => _nodes.Length;
@@ -30,8 +32,12 @@ public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T> wh
         return isDirected ? numberOfEdges : numberOfEdges / 2;
     }
 
-    public void AddEdge(T fromNode, T toNode, int weight = 1)
+    public void AddEdge(Edge<T> edge)
     {
+        var fromNode = edge.FromNode;
+        var toNode = edge.ToNode;
+        var weight = edge.Weight;
+        
         if (!_nodes.Contains(fromNode))
         {
             _nodes[Array.IndexOf(_nodes, null)] = fromNode;
@@ -67,6 +73,12 @@ public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T> wh
             }
         }
         return neighbours;
+    }
+    
+    public Edge<T> GetEdge(T fromNode, T toNode)
+    {
+        var edgeWeight = GetEdgeWeight(fromNode, toNode);
+        return new Edge<T>(fromNode, toNode, edgeWeight, IsDirected());
     }
 
     public int GetEdgeWeight(T fromNode, T toNode)
