@@ -99,7 +99,8 @@ public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T> wh
             {
                 if (visitedNodes.Add(neighbour))
                 {
-                    nodeString.AppendLine($"{new string(' ', currentDepth * 4)}└── {neighbour.Name}");
+                    var edgeWeight = GetEdgeWeight(node, neighbour);
+                    nodeString.AppendLine($"{new string(' ', currentDepth * 8)}└──({edgeWeight})──{neighbour.Name}");
                     nodeString = CreateNeighbourString(neighbour, currentDepth + 1, nodeString);
                 }
             }
