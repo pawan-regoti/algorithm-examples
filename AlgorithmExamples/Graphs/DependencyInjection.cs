@@ -10,7 +10,7 @@ public static class DependencyInjection
         
         services.AddTransient<BreadthFirstSearch.BreadthFirstSearch>();
         services.AddTransient<DepthFirstSearch.DepthFirstSearch>();
-        services.AddTransient<Prims.PrimsMinimumSpanningTree>();
+        services.AddTransient<Prims.PrimsMinimumSpanningTree<Node>>();
         
         services.AddTransient<BreadthFirstSearch.BreadthFirstSearchExample>();
         services.AddTransient<DepthFirstSearch.DepthFirstSearchExample>();

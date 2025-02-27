@@ -6,7 +6,7 @@ namespace Graphs.Prims;
 public class PrimsMinimumSpanningTreeExample(
     ILogger<PrimsMinimumSpanningTreeExample> logger,
     IServiceProvider serviceProvider,
-    PrimsMinimumSpanningTree primsMinimumSpanningTree)
+    PrimsMinimumSpanningTree<Node> primsMinimumSpanningTree)
 {
     
     public void Run()
