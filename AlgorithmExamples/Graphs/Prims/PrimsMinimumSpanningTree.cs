@@ -111,4 +111,42 @@ public class PrimsMinimumSpanningTree<T>(ILogger<PrimsMinimumSpanningTree<T>> lo
         unvisitedNodes.Remove(node);
         return true;
     }
+    
+    public void RunWithBuiltInPriorityQueue(Graph<T> graph)
+    {
+        var minimumSpanningTree = new List<Edge<T>>();
+        var visitedNodes = new HashSet<T>();
+        var pq = new PriorityQueue<(T node, Edge<T>? edge), int>();
+    
+        // Start with first node
+        var startNode = graph.GetNodes().First();
+        pq.Enqueue((startNode, null), 0);
+    
+        while (pq.Count > 0)
+        {
+            var (current, edge) = pq.Dequeue();
+        
+            if (!visitedNodes.Add(current))
+                continue;
+
+            if (edge != null)
+                minimumSpanningTree.Add(edge);
+            
+            foreach (var neighbor in graph.GetNeighbours(current))
+            {
+                if (visitedNodes.Contains(neighbor))
+                    continue;
+                
+                var newEdge = graph.GetEdge(current, neighbor);
+                pq.Enqueue((neighbor, newEdge), newEdge.Weight);
+            }
+        }
+
+        logger.LogInformation("Minimum Spanning Tree:");
+        foreach (var mstEdge in minimumSpanningTree)
+        {
+            logger.LogInformation("From: {FromNode} To: {ToNode} Weight: {Weight}", 
+                mstEdge.FromNode.Name, mstEdge.ToNode.Name, mstEdge.Weight);
+        }
+    }
 }
