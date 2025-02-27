@@ -20,4 +20,9 @@ public class Edge<T>
 
     public Edge()
     { }
+
+    public override string ToString()
+    {
+        return $"{FromNode}──({Weight})──{(IsDirected?">":"")}{ToNode}";
+    }
 }

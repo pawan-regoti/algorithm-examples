@@ -123,4 +123,28 @@ public class Graph<T>(int numberOfNodes, bool isDirected = false) : IGraph<T> wh
         
         return graphString.ToString();
     }
+    
+    public string DisplayGraph()
+    {
+        var sb = new StringBuilder();
+        
+        for (var i = 0; i < _nodes.Length; i++)
+        {
+            for (var j = 0; j < _nodes.Length; j++)
+            {
+                if (_graphMatrix[i, j] > 0 && (isDirected || i < j))
+                {
+                    sb.AppendLine(new Edge<T>(
+                        _nodes[i], 
+                        _nodes[j], 
+                        _graphMatrix[i, j], 
+                        IsDirected())
+                        .ToString());
+                }
+            }
+            sb.AppendLine();
+        }
+        
+        return sb.ToString();
+    }
 }

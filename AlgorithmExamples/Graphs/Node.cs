@@ -17,4 +17,9 @@ public class Node(ILogger<Node> logger)
     {
         Visited = false;
     }
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }
