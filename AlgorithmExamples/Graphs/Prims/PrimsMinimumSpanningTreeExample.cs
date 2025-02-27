@@ -15,7 +15,10 @@ public class PrimsMinimumSpanningTreeExample(
         
         logger.LogInformation("Running Prims Minimum Spanning Tree");
         primsMinimumSpanningTree.Run(graph);
+        primsMinimumSpanningTree.RunWithProrityQueue(graph);
+        primsMinimumSpanningTree.RunWithBuiltInPriorityQueue(graph);
         logger.LogInformation("Prims Minimum Spanning Tree Complete");
+        logger.LogInformation("\n{Graph}",graph.DisplayGraph());
     }
 
     
